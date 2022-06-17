@@ -35,7 +35,7 @@ function reverseBetween(head: ListNode | null, left: number, right: number): Lis
 function reverseLink(head, right) {
     if (!head) return null
     let cur = head,
-        next = head,  
+        next = head,
         pre = null
     while (cur && cur.val !== right) {
         next = cur.next
