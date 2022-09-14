@@ -89,24 +89,37 @@
  */
 var copyRandomList = function (head) {
     if (!head) return null
-    let res = new Node(null, null, null),
-        pre,
-        cur = head
-
+    let cur = head
+    // copy一个linkNode
     while (cur) {
-        cur.next = new Node(cur.val, null, cur.random)
-        cur = cur.next
+        const next = cur.next
+        cur.next = new Node(cur.val, next, cur.random)
+        cur = next
+    }
+    // 修正radom指针
+    cur = head.next
+    while (cur) {
+        cur.random = cur.random && cur.random.next
+        cur = cur && cur.next.next
+    }
+    // 分离
+    cur = head
+    let copyLink = new Node(null, null, null)
+    const copyLinkHead = copyLink
+    while (cur && cur.next) {
+        const next = cur.next
+        copyLink.next = next
+        cur.next = next.next
+        cur = next.next
+        copyLink = copyLink.next
     }
 
-    // cur = head.next
-    // while (cur) {
-    //     cur.random = cur.random && cur.random.next
-    //     pre.next = cur
-    //     pre = pre.next
-    //     cur = cur.next && cur.next.next
-    // }
-    // pre.next = null
-    return head
+    copyLink = copyLinkHead
+    while (copyLink) {
+        console.log(copyLink.val)
+        copyLink = copyLink.next
+    }
+    return copyLinkHead.next
 }
 // @lc code=end
 
