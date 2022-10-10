@@ -63,19 +63,22 @@
  * @param {TreeNode} q
  * @return {TreeNode}
  */
+
+/**
+ * @des: 二叉搜索树（又：二叉查找树，二叉排序树，Binary Search Tree，BST）是一种二叉树，其中每个结点最多有两个子结点且具有二叉搜索树性质：左子树上所有结点的值均小于它的根结点的值以及右子树上所有结点的值均大于它的根结点的值
+ */
+
 var lowestCommonAncestor = function (root, p, q) {
     // 先序
-    const preArr = getPreArr(root)
-    console.log(preArr, "----")
+    if (p.val < root.val && q.val < root.val) {
+        return lowestCommonAncestor(root.left, p, q)
+    }
+
+    if (p.val > root.val && q.val > root.val) {
+        return lowestCommonAncestor(root.right, p, q)
+    }
+
+    return root
 }
 
-function getPreArr(root) {
-    const arr = []
-    if (root) {
-        arr.push(root.val)
-        arr.push(...getPreArr(root.left))
-        arr.push(...getPreArr(root.right))
-    }
-    return arr
-}
 // @lc code=end
