@@ -10,20 +10,20 @@
  * @return {string}
  */
 var removeOuterParentheses = function (s) {
-    let res = "",
-        count = 0
-
-    for (var i = 0; i < s.length; i++) {
-        const curStr = s[i]
-        if (curStr === "(") {
-            if (count > 0) res += curStr
-            count++
-        }
-        if (curStr === ")") {
-            if (count > 1) res += curStr
-            count--
-        }
+  const stack = []
+  let str = '',
+    startIndex = 0
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') {
+      stack.push('(')
+    } else {
+      stack.pop(')')
     }
-    return res
+    if (stack.length === 0) {
+      str += s.slice(startIndex + 1, i)
+      startIndex = i + 1
+    }
+  }
+  return str
 }
 // @lc code=end

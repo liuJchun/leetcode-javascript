@@ -10,52 +10,29 @@
  * @return {string}
  */
 var minRemoveToMakeValid = function (s) {
-    // 方案一
-    // const stack = []
-    // let res = ""
-    // for (const ch of s) {
-    //     if (ch !== "(" && ch !== ")") {
-    //         res += ch
-    //     } else {
-    //         if (ch === "(") {
-    //             stack.push(ch)
-    //             res += ch
-    //         } else if (ch === ")" && stack[stack.length - 1] === "(") {
-    //             stack.pop()
-    //             res += ch
-    //         }
-    //     }
-    // }
-    // let len = stack.length
-    // while (len--) {
-    //     const index = res.lastIndexOf("(")
-    //     res = res.slice(0, index) + res.slice(index + 1)
-    // }
-    // return res
-
-    const leftStack = [],
-        rightStack = []
-
-    for (let i = 0; i < s.length; i++) {
-        const ch = s[i]
-        if (ch === "(") {
-            leftStack.push(i)
-        }
-        if (ch === ")") {
-            if (leftStack.length > 0) {
-                leftStack.pop()
-            } else {
-                rightStack.push(i)
-            }
-        }
+  let stack = [],
+    // 记录多余的 index
+    deletIndexStack = []
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') {
+      stack.push('(')
+      deletIndexStack.push(i)
+    } else if (s[i] === ')') {
+      if (stack[stack.length - 1] === '(') {
+        stack.pop()
+        deletIndexStack.pop()
+      } else {
+        deletIndexStack.push(i)
+      }
+    } else {
+      continue
     }
-
-    const res = [...s],
-        loopArr = leftStack.concat(rightStack)
-    for (const index of loopArr) {
-        res[index] = ""
-    }
-
-    return res.join("")
+  }
+  // 扫描 index
+  let str = s.split('')
+  for (let i = 0; i < deletIndexStack.length; i++) {
+    str[deletIndexStack[i]] = ''
+  }
+  return str.join('')
 }
 // @lc code=end

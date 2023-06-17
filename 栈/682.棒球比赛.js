@@ -4,42 +4,33 @@
  * [682] 棒球比赛
  */
 
-const { RuleTester } = require("eslint")
-
 // @lc code=start
 /**
- * @param {string[]} ops
+ * @param {string[]} operations
  * @return {number}
  */
-var calPoints = function (ops) {
-    if (!ops) {
-        return 0
-    }
+var calPoints = function (operations) {
+  const stack = []
+  for (let i = 0; i < operations.length; i++) {
+    const operate = operations[i]
 
-    const getCurCode = function (type, arr) {
-        const RULES = {
-            "+": function (arr) {
-                arr[arr.length] = arr[arr.length - 2] + arr[arr.length - 1]
-            },
-            D: function (arr) {
-                arr[arr.length] = arr[arr.length - 1] * 2
-            },
-            C: function (arr) {
-                arr.pop()
-            },
-            default: function (arr) {
-                arr.push(+type)
-            },
-        }
+    switch (operate) {
+      case '+':
+        stack.push(stack[stack.length - 1] + stack[stack.length - 2])
+        break
 
-        ;(RULES[type] || RULES.default)(arr)
-    }
-    const sums = []
-    for (let i = 0; i < ops.length; i++) {
-        getCurCode(ops[i], sums)
-    }
-    console.log(sums.join(", "))
+      case 'D':
+        stack.push(2 * stack[stack.length - 1])
+        break
 
-    return sums.reduce((pre, cur) => pre + cur, 0)
+      case 'C':
+        stack.pop()
+        break
+
+      default:
+        stack.push(Number(operate) || 0)
+    }
+  }
+  return stack.reduce((pre, cur) => pre + cur, 0)
 }
 // @lc code=end

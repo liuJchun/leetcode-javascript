@@ -11,17 +11,19 @@
  * @return {boolean}
  */
 var backspaceCompare = function (s, t) {
-    const getBackStr = str => {
-        const res = []
-        for (const code of str) {
-            if (code === "#") {
-                res.pop()
-            } else {
-                res.push(code)
-            }
-        }
-        return res.join("")
+  const getBackStr = str => {
+    const stack = []
+    for (const char of str) {
+      switch (char) {
+        case '#':
+          stack.pop()
+          break
+        default:
+          stack.push(char)
+      }
     }
-    return getBackStr(s) === getBackStr(t)
+    return stack.join('')
+  }
+  return getBackStr(s) === getBackStr(t)
 }
 // @lc code=end

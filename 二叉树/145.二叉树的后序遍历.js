@@ -18,18 +18,18 @@
  * @return {number[]}
  */
 var postorderTraversal = function (root) {
-    if (!root) return res
+  if (root === null) return []
 
-    let res = [],
-        stack = [root]
+  let res = [],
+    stack = [root]
 
-    while (stack.length) {
-        const node = stack.pop()
-        res.unshift(node.val)
-        if (node.left) stack.push(node.left)
-        if (node.right) stack.push(node.right)
-    }
-    return res
+  while (stack.length) {
+    const node = stack.pop()
+    res.unshift(node.val)
+    if (node.left) stack.push(node.left)
+    if (node.right) stack.push(node.right)
+  }
+  return res
 }
 
 // const postorderTraversalNode = function (node, arr) {

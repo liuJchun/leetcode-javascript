@@ -16,6 +16,7 @@ var exclusiveTime = function (n, logs) {
 
     for (const log of logs) {
         const [id, status, time] = log.split(":")
+        
         if (status === "start") {
             stack.push({
                 id: id,
